@@ -1,0 +1,239 @@
+global proc afroCurlCreateUI()
+{
+	// Create afroCurl menu
+	global string $gMainWindow;
+	setParent $gMainWindow;
+	global string $afroCurlMainMenu = "afroCurlMainMenu";
+	menu -label "afroCurl" $afroCurlMainMenu;
+	setParent -menu $afroCurlMainMenu;
+	menuItem -label "Create Hair" -command "source afroCurlCreateHair.mel;";
+	menuItem -label "Reset Hair" -command "afroCurlResetCommand;";
+	menuItem -label "Restore zero sized hair" -command "afroCurlReinitCommand;";
+	menuItem -divider true;
+	menuItem -label "Cut Tool" -command "source afroCurlCutTool.mel;";
+	menuItem -label "Brush Tool" -command "source afroCurlBrushTool.mel;";
+	menuItem -label "Brush Tool" -command "source afroCurlBrushTool.mel;" -optionBox true;
+	menuItem -divider true;
+	menuItem -label "Export to Dynamic NURBS" -command "afroCurlExportToNURBS; \
+												string $name = `afroCurlSelectCommand`; \
+												string $surface = `connectionInfo -sourceFromDestination ( $name + \".surface\" ) `;\
+												string $node = plugNode( $surface );\
+												string $parent[] = `listRelatives -p $node`;\
+												select -add $parent[ 0 ]; \
+												MakeCurvesDynamic;";
+	menuItem -label "Export to NURBS" -command "afroCurlExportToNURBS; \
+												string $name = `afroCurlSelectCommand`; \
+												string $surface = `connectionInfo -sourceFromDestination ( $name + \".surface\" ) `;\
+												string $node = plugNode( $surface );\
+												string $parent[] = `listRelatives -p $node`;\
+												select -add $parent[ 0 ]; ";
+	menuItem -label "Import from NURBS" -command "afroCurlImportNURBS;";
+	menuItem -divider true;
+	menuItem -label "Update textures" -command "afroCurlResetTextures;refresh;";
+	menuItem -label "Textures properties" -command "source afroCurlTextureProperties.mel;";
+
+	menuItem -divider true;
+	menuItem -label "Prepare for mental ray rendering" -command "afroCurlPrepareForMentalRayCommand;";
+
+	// Create afroCurl select menu
+	setParent $gMainWindow;
+	global string $afroCurlSelectMenu = "afroCurlSelectMenu";
+	menu -label "afroCurl select" -postMenuCommand "source afroCurlRebuildSelectMenu.mel;" $afroCurlSelectMenu;
+
+	setParent $gMainWindow;
+
+	// Create afroCurl cut tool
+	if ( !`contextInfo -exists afroCurlCutTool` )
+	{
+		afroCurlCutToolCommand afroCurlCutTool;
+		print ( "afroCurl: Created the afroCurlCutTool context.\n" );
+	}
+
+	// Create afroCurl brush tool
+	if ( !`contextInfo -exists afroCurlBrushTool` )
+	{
+		afroCurlBrushToolCommand afroCurlBrushTool;
+		print ( "afroCurl: Created the afroCurlBrushTool context.\n" );
+	}
+
+	// Create afroCurl haptic settings tool
+	if ( !`contextInfo -exists afroCurlHapticSettingsToolContext1` )
+	{
+		afroCurlHapticSettingsToolCommand afroCurlHapticSettingsToolContext1;
+		print ( "afroCurl: Created the afroCurlHapticSettingsToolContext1 context.\n" );
+	}
+
+	// Create afroCurl tablet settings tool
+	if ( !`contextInfo -exists afroCurlTabletSettingsToolContext1` )
+	{
+		afroCurlTabletSettingsToolCommand afroCurlTabletSettingsToolContext1;
+		print ( "afroCurl: Created the afroCurlTabletSettingsToolContext1 context.\n" );
+	}
+
+	//
+	// Shelf
+	//
+	string $afroCurlShelfName = "afroCurl";
+	int $afroCurlShelfNameEx = `layout -q -ex $afroCurlShelfName`;
+	if ($afroCurlShelfNameEx == 1)
+	{
+		global string $gShelfTopLevel;
+		shelfTabLayout -edit -selectTabIndex 1 $gShelfTopLevel; 
+		shelfTabChange();
+		print ( "afroCurl: Deleting current afroCurl shelve.\n" );
+		deleteUI -layout $afroCurlShelfName;
+	}
+
+	//add shelf
+	print ( "afroCurl: Adding new afroCurl shelve.\n" );
+	$afroCurlShelfTab = `addNewShelfTab $afroCurlShelfName`;
+	
+	string $shelfButtons[] = `shelfLayout -q -childArray $afroCurlShelfTab`;
+
+	// delete afroCurl Brush tool icons
+	for ( $button in $shelfButtons )
+	{
+	   string $label;
+
+	   // Assert that this is a shelfButton
+	   if ( `objectTypeUI -isType "shelfButton" $button` )
+	   {
+		  deleteUI $button;
+	   }
+	}
+
+	// create afroCurl Select Guides icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl: Select Guides"
+				-label "Select Guides"
+				-image1 "afroCurl_guides_selection.png"
+				-style "iconOnly"
+				-command "optionVar -iv \"afroCurlSelectionMode\" 1;afroCurlSwitchSelectionModeCommand;refresh;"`;
+
+	// create afroCurl Select Vertices icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl: Select Vertices"
+				-label "Select Vertices"
+				-image1 "afroCurl_vertices_selection.png"
+				-style "iconOnly"
+				-command "optionVar -iv \"afroCurlSelectionMode\" 2;afroCurlSwitchSelectionModeCommand;refresh;"`;
+				
+	// create afroCurl Select Tips icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl: Select Tips"
+				-label "Select Tips"
+				-image1 "afroCurl_tips_selection.png"
+				-style "iconOnly"
+				-command "optionVar -iv \"afroCurlSelectionMode\" 3;afroCurlSwitchSelectionModeCommand;refresh;"`;
+
+	// create afroCurl Select Roots icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl: Select Roots"
+				-label "Select Roots"
+				-image1 "afroCurl_roots_selection.png"
+				-style "iconOnly"
+				-command "optionVar -iv \"afroCurlSelectionMode\" 4;afroCurlSwitchSelectionModeCommand;refresh;"`;
+
+	// create afroCurl Brush tool icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl Brush tool"
+				-label "afroCurl Brush tool"
+				-image1 "afroCurl_hair_brush.png"
+				-style "iconOnly"
+				-command "toolPropertyWindow; setToolTo afroCurlBrushTool"`;
+
+	// create afroCurl Cut tool icon
+	string $cutButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl Cut tool"
+				-label "afroCurl Cut tool"
+				-image1 "afroCurl_scissors.png"
+				-style "iconOnly"
+				-command "toolPropertyWindow; setToolTo afroCurlCutTool"`;
+
+	// create afroCurl haptic tool icon
+	string $hapticButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl haptic settings tool"
+				-label "afroCurl haptic settings tool"
+				-image1 "afroCurl_haptic.png"
+				-style "iconOnly"
+				-command "setToolTo afroCurlHapticSettingsToolContext1"`;
+
+	// create afroCurl Undo icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl Undo"
+				-label "afroCurl Undo"
+				-image1 "afroCurl_arrow_undo.png"
+				-style "iconOnly"
+				-command "afroCurlUndoCommand;refresh;"`;
+	
+	// create afroCurl Redo icon
+	string $brushButton = 	`shelfButton
+				-parent $afroCurlShelfTab  // Set parent Shelf as "Custom"
+				-enable 1
+				-width 34
+				-height 34
+				-manage 1
+				-visible 1
+				-annotation "afroCurl Redo"
+				-label "afroCurl Redo"
+				-image1 "afroCurl_arrow_redo.png"
+				-style "iconOnly"
+				-command "afroCurlRedoCommand;refresh;"`;
+
+	// enable rendering with 3Delight
+	print ( "afroCurl: Enabling rendering with 3Delight.\n" );
+	source afroCurl3DelightRendering.mel;
+
+	// asssociate keyboard shortcuts
+	source afroCurlHotkeys.mel;
+
+	print ( "afroCurl: Initialization completed.\n" );
+}
