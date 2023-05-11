@@ -2,3 +2,8 @@
 Afro Hair Plugin in Autodesk Maya
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Abstract: Hair is an essential part in character design and can go as far to be considered a factor which composes a character's identity. I will be creating a node based, procedural modelling tool, which offers artist friendly controls to procedurally model curly, afro-textured hair. I will be using Autodesk Maya, C++, Python and PyMel, which is Maya’s own scripting language.
+
+
+
+https://github.com/asaphkalala/finalyearproject/assets/83978332/13b9f71d-7df3-4d90-a9e1-1ce84aba3685
+
