@@ -13,7 +13,7 @@ An modelling tool for the purposes of trying to simulate afro-curly hair using o
 * Left shift - moves camera in negative y direction of a scene camera
 
 ### Parameter Controls
-* Arrows - control the current action
+* Arrows (up and down) - control the current action
 * Numbers 3-6 - pick the action to control:
 
 
@@ -23,5 +23,6 @@ An modelling tool for the purposes of trying to simulate afro-curly hair using o
 6 - hair velocity damping,
 
 
+https://github.com/asaphkalala/finalyearproject/assets/83978332/54fe8363-81cd-4f4f-8b94-fd88ee9ef80a
 
 
