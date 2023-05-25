@@ -24,5 +24,4 @@ An modelling tool for the purposes of trying to simulate afro-curly hair using o
 
 
 
-https://github.com/asaphkalala/finalyearproject/assets/83978332/13b9f71d-7df3-4d90-a9e1-1ce84aba3685
 
