@@ -23,6 +23,5 @@ An modelling tool for the purposes of trying to simulate afro-curly hair using o
 6 - hair velocity damping,
 
 
-https://github.com/asaphkalala/finalyearproject/assets/83978332/54fe8363-81cd-4f4f-8b94-fd88ee9ef80a
-
+https://github.com/asaphkalala/finalyearproject/assets/83978332/9c7a8a8b-5e3f-49c9-9767-89ee1c206fe4
 
