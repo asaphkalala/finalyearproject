@@ -10,9 +10,6 @@ A modelling tool for the purposes of trying to simulate afro-curly hair using op
 Uses a slider and check box system for user interactivity
 
 
-
-https://github.com/asaphkalala/finalyearproject/assets/83978332/9c7a8a8b-5e3f-49c9-9767-89ee1c206fe4
-
 ### References and Repositories
 
 * GerardMT (no date a) GERARDMT/Cloth: A simple physics cloth system., GitHub. Available at:
