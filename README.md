@@ -45,6 +45,6 @@ Shaders (no date) LearnOpenGL. Available at: https://learnopengl.com/Getting-sta
 * Fur rendering (2012) Catalin ZZ. Available at: http://www.catalinzima.com/xna/tutorials/fur-rendering/
 (Accessed: 27 March 2023).
 * G-Truc (no date) G-TRUC/GLM: OpenGL Mathematics (GLM), GitHub. Available at: https://github.com/gtruc/glm (Accessed: 17 March 2023).
-* Hair Course. (2010, August). Retrieved July 2023, from http://developer.download.nvidia.com/presentations/2010/SIGGRAPH/HairCourse_SIGGRAPH2010.pdf (used for
+* Hair Course. (2010, August). Retrieved July 2023, from http://developer.download.nvidia.com/presentations/2010/SIGGRAPH/HairCourse_SIGGRAPH2010.pdf 
 
 
