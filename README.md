@@ -3,7 +3,7 @@
 A modelling tool for the purposes of trying to simulate afro-curly hair using openGL/C++.
 
 ### Camera Controls 
-* Mouse cintrols to scroll and rotate
+* Mouse controls to scroll and rotate camera view
 
 
 ### Parameter Controls
@@ -16,7 +16,7 @@ Uses a slider and check box system for user interactivity
 ![finaloutcome](https://github.com/asaphkalala/finalyearproject/assets/83978332/a13d4145-5f14-4fb1-9b56-9f83c3ddaf14)
 
 
-![ImGUI](https://github.com/asaphkalala/finalyearproject/assets/83978332/d31a4a3c-d33e-4a01-8c60-3a90b1b5e25f)
+*video demo to be added*
 
 
 ### References and Repositories
