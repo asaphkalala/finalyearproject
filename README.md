@@ -2,8 +2,8 @@
 ## Afro Hair Modelling Tool ##
 A modelling tool for the purposes of trying to simulate afro-curly hair using openGL/C++.
 
-### Camera Controls (Use the keyboard and mouse to inspect the model in an orthographic view)
-* Enter - starts and stops simulation
+### Camera Controls 
+* Mouse cintrols to scroll and rotate
 
 
 ### Parameter Controls
